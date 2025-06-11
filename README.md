@@ -1,93 +1,132 @@
-#SkinNiravana – Online Skincare Shopping App
+# 🧴 SkinNiravana – Online Skincare Shopping App
 
-SkinNiravana is a full-stack web application built using Node.js, Express, MongoDB, and Passport.js, designed to offer a seamless shopping experience for skincare products. It includes features such as user authentication, product browsing, search and filter, cart management, and admin inventory control.
+This project is a full-stack web application built with **Node.js**, **Express**, and **MongoDB** to provide a seamless shopping experience for skincare products. It supports user and admin roles, shopping cart functionality, and MongoDB-backed inventory management.
 
-🚀 Features
-User registration & login (with secure password hashing)
+---
 
-Product listing with category filters (face, body, hair)
+## ✨ Features
 
-Search bar for quick lookup
+- User authentication with Passport.js  
+- Signup/Login functionality with hashed passwords  
+- Product listing with search and filter  
+- Add/update/delete items in cart  
+- Admin controls to manage inventory (CRUD)  
+- MongoDB collections: Users, Items, Carts  
+- CORS/session support, flash messages  
 
-Add, update, and delete items from cart
+---
 
-Admin panel for managing inventory (CRUD operations)
+## ⚙️ Setup Instructions
 
-MongoDB-backed storage for users, items, and carts
+### 1. Clone the Repository
 
-Flash messages for login/signup errors
+```bash
+git clone https://github.com/<your-username>/SkinNiravana.git
+cd SkinNiravana
+```
 
-Session-based authentication with Passport.js
+### 2. Install Dependencies
 
-🧩 Tech Stack
-Frontend: HTML, CSS, Bootstrap (via templates), JavaScript
-
-Backend: Node.js, Express.js
-
-Database: MongoDB, Mongoose
-
-Authentication: Passport.js with bcryptjs
-
-Session Management: express-session, connect-flash
-
-Other Tools: method-override
-
-⚙️ Installation & Setup
-Step 1: Prerequisites
-Ensure you have Node.js and npm installed.
-
-Install Nord.js from www.nordjs.org (if used for theme or design).
-
-bash
-Copy
-Edit
+```bash
 npm install
 npm install express mongoose express-session passport passport-local bcryptjs connect-flash method-override
-Step 2: Launch the Project
-Extract the project ZIP file and open it in Visual Studio Code.
+```
 
-Update the database name and port in app.js (default: localhost:3800).
+### 3. Configure Database & Port
 
-Start the application:
+- Open `app.js`  
+- Ensure `localhost:3800` is set or modify to your desired port  
+- Update MongoDB database name if needed
 
-bash
-Copy
-Edit
+### 4. Start the Application
+
+```bash
 node app.js
-Visit http://localhost:3800 in your browser.
+```
 
-🧪 Usage
-Users can sign up, log in, browse products, filter items, manage cart, and place orders.
+### 5. Test Locally
 
-Admins (username: admin) can add, edit, or delete products from the inventory.
+Visit: [http://localhost:3800](http://localhost:3800)  
+You’ll be redirected to the login page.
 
-All actions reflect real-time changes in the MongoDB collections: Users, Items, and Carts.
+---
 
-📸 Screenshots & Demo
-Login & Signup Pages
+## 🧪 App Usage
 
-Product List with Search/Filter
+### User Role
 
-Cart Management
+- Sign up → Credentials saved in MongoDB  
+- Login → View skincare products  
+- Add to cart → Adjust quantity → Checkout
 
-Admin Inventory Dashboard
+### Admin Role
 
-📺 Demo Video
-📦 Project Box Drive
+- Login as `admin`  
+- Add/Edit/Delete items in inventory  
+- Changes reflect instantly in the MongoDB `Items` collection
 
-📂 Database Models
-Users
-js
-Copy
-Edit
-{ _id, username, password, email, phone, address }
-Items
-js
-Copy
-Edit
-{ _id, name, description, value, count, image, type }
-Carts
-js
-Copy
-Edit
-{ _id, userId, items }
+---
+
+## 🛒 MongoDB Collections
+
+### Users
+
+```json
+{ "_id": ObjectId, "username": String, "password": String, "email": String, "phone": String, "address": String }
+```
+
+### Items
+
+```json
+{ "_id": ObjectId, "name": String, "description": String, "value": Number, "count": Number, "image": String, "type": String }
+```
+
+### Carts
+
+```json
+{ "_id": ObjectId, "userId": ObjectId, "items": Array }
+```
+
+---
+
+## 🌐 Power Automate/HTTP Integration
+
+This app can be used with platforms like Power Automate via HTTP actions:
+
+- **Method**: GET/POST  
+- **URL**: `http://<your-ip>:3800`  
+- Data returned in JSON structure
+
+---
+
+## 🧪 Demo & Resources
+
+- 📺 **Video**: [Google Drive](https://drive.google.com/file/d/1gf4-7vOarCg3Y-IzBL8KrpN1_SLC_zon/view?usp=drive_link)  
+- 📦 **Backup**: [Box Drive](https://utdallas.box.com/s/tlyfgiqo1qcybybjfzez83d5bdbs6mgm)
+
+---
+
+## 👨‍💻 Team Members
+
+| Name                  | Contributions                                           |
+|-----------------------|---------------------------------------------------------|
+| Shreya Vishwanath     | Backend APIs, cart models, filtering                    |
+| Maneesh Reddy Polu    | Items page, Buy now logic, item models                  |
+| Snigdha Gogineni      | Signup/logout, MongoDB schema, CSS styling, testing     |
+| Dheeraj Chintagumpala | Login functionality, DB models, README                  |
+| Chaya Kusi            | Admin enhancements, cart UI, advanced filtering         |
+
+---
+
+## 📝 Notes
+
+- Ensure MongoDB is running locally or use MongoDB Atlas  
+- Replace sample data or table names as needed  
+- Use environment configs in deployment for security  
+- Secure admin access and use production-ready session configs
+
+---
+
+## 📄 License
+
+MIT © 2025
