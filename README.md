@@ -1,40 +1,93 @@
-# online_shopping_SkinNiravana_platform
+#SkinNiravana – Online Skincare Shopping App
 
-Step 1:
-Prerequisites
-Make sure you have the following installed on your system:
-	•	Nord.js from www.nordjs.org
-	•	install Nord using npm (usually included with Node.js installation):
-       		npm install 
-	•	install all dependencies like Express passport mongoose using npm: npm install express mongoose express-session passport passport-local bcryptjs connect-flash
-										   npm install method-override --save
+SkinNiravana is a full-stack web application built using Node.js, Express, MongoDB, and Passport.js, designed to offer a seamless shopping experience for skincare products. It includes features such as user authentication, product browsing, search and filter, cart management, and admin inventory control.
 
+🚀 Features
+User registration & login (with secure password hashing)
 
-Step 2:
+Product listing with category filters (face, body, hair)
 
-Make sure all dependencies installed
-Extract the zip file and open it on visual Code. 
+Search bar for quick lookup
 
-Step 3: 
+Add, update, and delete items from cart
 
-Make sure that port is running on localhost 3800 in app.js file 
-Adjust the db names according to your preferences.
-Running the App
+Admin panel for managing inventory (CRUD operations)
+
+MongoDB-backed storage for users, items, and carts
+
+Flash messages for login/signup errors
+
+Session-based authentication with Passport.js
+
+🧩 Tech Stack
+Frontend: HTML, CSS, Bootstrap (via templates), JavaScript
+
+Backend: Node.js, Express.js
+
+Database: MongoDB, Mongoose
+
+Authentication: Passport.js with bcryptjs
+
+Session Management: express-session, connect-flash
+
+Other Tools: method-override
+
+⚙️ Installation & Setup
+Step 1: Prerequisites
+Ensure you have Node.js and npm installed.
+
+Install Nord.js from www.nordjs.org (if used for theme or design).
+
+bash
+Copy
+Edit
+npm install
+npm install express mongoose express-session passport passport-local bcryptjs connect-flash method-override
+Step 2: Launch the Project
+Extract the project ZIP file and open it in Visual Studio Code.
+
+Update the database name and port in app.js (default: localhost:3800).
+
 Start the application:
- node app.js  This will run the app.js file using Node.js.
-Open your web browser and visit http://localhost:3800 (or the port that is specified in app.js).
-		
-In the localhost page on the web browser, the login page will be displayed for skinNiravana. 
-All the new users need to signup by giving their credentials. All these credentials will be saved in mongodb
-The returning user can directly login by entering their username and password.
-After Successful login all the list of the items will be displayed. These items can be filtered using the search bar and the dropdown bar provided.
-All the items and be added to the cart, the  quantity of the items and be changed int he cart section.
-Finally by clicking the buy button the order will be placed.
 
+bash
+Copy
+Edit
+node app.js
+Visit http://localhost:3800 in your browser.
 
+🧪 Usage
+Users can sign up, log in, browse products, filter items, manage cart, and place orders.
 
-The initial login page can also be used bye the admins to update or make changes to the inventory. For all the admins the user name is admin. 
-The admins get options to edit the items, delete the items, add new items. Any of the changes made by the admin, those change will be updated in the mongodb.
+Admins (username: admin) can add, edit, or delete products from the inventory.
 
+All actions reflect real-time changes in the MongoDB collections: Users, Items, and Carts.
 
-On clicking the logout button, the page redirects to the login page.
+📸 Screenshots & Demo
+Login & Signup Pages
+
+Product List with Search/Filter
+
+Cart Management
+
+Admin Inventory Dashboard
+
+📺 Demo Video
+📦 Project Box Drive
+
+📂 Database Models
+Users
+js
+Copy
+Edit
+{ _id, username, password, email, phone, address }
+Items
+js
+Copy
+Edit
+{ _id, name, description, value, count, image, type }
+Carts
+js
+Copy
+Edit
+{ _id, userId, items }
