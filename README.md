@@ -21,8 +21,8 @@ This project is a full-stack web application built with **Node.js**, **Express**
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/SkinNiravana.git
-cd SkinNiravana
+git clone https://github.com/snigdhagogineni/online_shopping_SkinNiravana_platform.git
+cd online_shopping_SkinNiravana_platform
 ```
 
 ### 2. Install Dependencies
