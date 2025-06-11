@@ -1,0 +1,96 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.cardbuttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5%;
+}
+
+.price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #008000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+}
+
+#cart-icon {
+  margin-right: 10px;
+  position: relative;
+}
+
+#cart-icon i {
+  font-size: 2.5em;
+}
+
+#cart-count {
+  position: absolute;
+  top: -25px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-link a {
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+
+.checkout-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.checkout-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10%;
+}
+
+.checkout-item img {
+  height: 100px;
+  margin-right: 10px;
+}
+
+.checkout-item span {
+  margin-right: 10px;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.price-stock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stock {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: red;
+}
