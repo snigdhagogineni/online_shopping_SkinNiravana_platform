@@ -106,18 +106,6 @@ This app can be used with platforms like Power Automate via HTTP actions:
 
 ---
 
-## 👨‍💻 Team Members
-
-| Name                  | Contributions                                           |
-|-----------------------|---------------------------------------------------------|
-| Shreya Vishwanath     | Backend APIs, cart models, filtering                    |
-| Maneesh Reddy Polu    | Items page, Buy now logic, item models                  |
-| Snigdha Gogineni      | Signup/logout, MongoDB schema, CSS styling, testing     |
-| Dheeraj Chintagumpala | Login functionality, DB models, README                  |
-| Chaya Kusi            | Admin enhancements, cart UI, advanced filtering         |
-
----
-
 ## 📝 Notes
 
 - Ensure MongoDB is running locally or use MongoDB Atlas  
@@ -125,8 +113,3 @@ This app can be used with platforms like Power Automate via HTTP actions:
 - Use environment configs in deployment for security  
 - Secure admin access and use production-ready session configs
 
----
-
-## 📄 License
-
-MIT © 2025
