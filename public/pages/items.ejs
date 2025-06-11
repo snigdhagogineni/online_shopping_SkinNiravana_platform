@@ -1,0 +1,265 @@
+<!-- show all the  items in the database -->
+<!-- if the user is admin also show delete button for each item-->
+<!-- items.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SkinNirvana</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <style>
+      .navbar {
+        background: linear-gradient(to bottom, #00BC7E, #108775);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 24px;
+    
+      }
+    
+      .navbar-brand {
+        font-size: 45px !important;
+      }
+    
+    
+      .navbar-brand,
+      .navbar-nav .nav-link {
+        font-size: 28px;
+      }
+    
+      .heading1 {
+        padding-top: 110px;
+        /* Adjust this value as needed */
+      }
+    
+      .heading1 p {
+        font-size: 20px;
+      }
+    
+      #cart-count {
+        width: 25px;
+        height: 30px;
+        top: -34px;
+        right: -5px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+
+<body>
+<body>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">SkinNiravana</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/checkout" style="text-decoration: none; color: inherit">
+                <span id="cart-icon">
+                  <i class="bi bi-cart4"></i>
+                  <span id="cart-count">0</span>
+                </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout" style="color: white;">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- <h1>SkinNirvana</h1> -->
+    <div class="heading1">
+      <div>
+        <h2>Welcome to SkinNirvana!</h2>
+        <p>Discover a world of skincare products curated just for you. Explore our collection and add your favorites to the cart for a radiant and healthy skin journey.</p>
+      </div>
+    </div>    
+
+    <h2>Explore Our Products</h2>
+
+    <div class="row">
+      <div class="col-2">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          placeholder="name"
+        />
+      </div>
+
+      <div class="col-2">
+        <select id="type" name="type" class="form-control"></select>
+      </div>
+
+      <div class="col-2">
+        <button
+          class="btn btn-info"
+          id="add-game-button"
+          onclick="search()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+    <br />
+
+    <% if (typeof message !== 'undefined' && message !== null) { %>
+    <div class="alert alert-success" role="alert" id="successInfo"><%= message %></div>
+    <% } %>
+    <div class="row">
+      <% items.forEach(function(item, index) { %> <% if (index % 4===0) { %>
+    </div>
+    <div class="row">
+      <% } %>
+      <div class="col-md-3 mb-4">
+        <div class="card h-100">
+          <img
+            src= "../<%= item.image %>"
+            class="card-img-top"
+            alt="<%= item.name %>"
+            style="height: 200px; margin-top: 10%; object-fit: contain"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= item.name %></h5>
+            <p class="card-text"><%= item.description %></p>
+            <p class="card-text price">$<%= item.value %></p>
+            <button
+              onclick="addToCart('<%= item._id %>')"
+              class="btn btn-primary"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+
+    <script>
+      setTimeout(function () {
+        var successInfo = document.getElementById('successInfo');
+        if (successInfo) {
+          window.location.href = './items';
+        }
+      }, 5000);
+      function fetchCartCount() {
+        fetch("/cart")
+          .then((res) => res.json())
+          .then((data) => {
+            const cartItems = data.items || [];
+            const totalCount = cartItems.reduce(
+              (total, item) => total + item.count,
+              0
+            );
+            document.getElementById("cart-count").innerText = totalCount;
+          })
+          .catch((error) => {
+            console.error("Error fetching cart count:", error);
+          });
+      }
+
+
+      function search() {
+        title = document.getElementById("name").value;
+        type = document.getElementById("type").value;
+        window.location.href = `items/filter?title=${title}&type=${type}`;
+      }
+
+      window.onload = function () {
+        console.log("Enter");
+        var select = document.getElementById("type");
+        var items =  <%- JSON.stringify(items) %>;
+        values = []
+        var option = document.createElement("option");
+          option.value = "";
+          option.text = "";
+          select.appendChild(option);
+        const st = new Set();
+        for (var i = 0; i < items.length; i++) {
+            if(st.has(items[i].type)){
+                continue;
+            }
+          var option = document.createElement("option");
+          option.value = items[i].type;
+          option.text = items[i].type;
+          select.appendChild(option);
+          st.add(items[i].type)
+        }
+        
+        const typeSelect = document.getElementById("type");
+        const name = document.getElementById("name");
+        const urlParams = new URLSearchParams(window.location.search);
+        var searchedName = urlParams.get("title");
+        var selectedType = urlParams.get("type");
+        selectedType = selectedType !== null ? selectedType : "";
+        searchedName = searchedName !== null ? searchedName : "";
+        typeSelect.value = selectedType;
+        name.value = searchedName;
+        fetchCartCount();
+        setInterval(fetchCartCount, 5000);
+  
+      };
+      document
+        .getElementById("cart-count")
+        .addEventListener("click", function () {
+          window.location.href = "/checkout";
+        });
+
+      function addToCart(itemId) {
+        fetch("/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ itemId: itemId }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              console.log("Item added to cart");
+              fetchCartCount();
+            } else {
+              console.error("Failed to add item to cart");
+            }
+          })
+          .catch((err) => {
+            console.error("Error adding item to cart:", err);
+          });
+      }
+    </script>
+  </body>
+</html>

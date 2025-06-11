@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Registration</title>
+    <style>
+      
+      
+      .navbar {
+        background: linear-gradient(to bottom, #00BC7E, #108775);
+        padding-top: 20px;
+      padding-bottom: 20px;
+      font-size: 24px;
+        /* padding: 2.5rem; */
+      }
+    
+      .navbar-brand,
+      .navbar-nav .nav-link {
+        font-size: 45px;
+      }
+      .register-container{
+       
+      background: linear-gradient(to bottom, #00BC7E, #108775);
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      height: 550px;
+    }
+    </style>
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">SkinNiravana</a>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="register-container justify-content-center align-items-center mt-5">
+      <h1>Create a New Account</h1>
+      <form id="registerForm">
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Username"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control"
+              placeholder="Phone"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="text"
+              id="address"
+              name="address"
+              class="form-control"
+              placeholder="Address"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-8">
+            <input
+              type="submit"
+              onclick="submitForm()"
+              value="Register"
+              class="btn btn-info"
+            />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="col-md-10">
+            <a href="/login" style="color:white;">Already have an account? Go to Login</a>
+          </div>
+        <!-- </div> -->
+      </form>
+    </div>
+
+    <script>
+      function submitForm() {
+        event.preventDefault();
+        // reference : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet
+        const uname = document.getElementById("username").value.trim();
+        const unameRegex = new RegExp(/^[a-zA-Z ]+$/);
+        console.log(uname);
+        if (uname === "" || !unameRegex.test(uname)) {
+          alert(
+            `Username cannot be empty and should contain only alphabets and spaces.`
+          );
+          return;
+        }
+
+        const password = document.getElementById("password").value.trim();
+        if (password === "") {
+          alert(`Password cannot be empty`);
+          return;
+        }
+
+        const email = document.getElementById("email").value.trim();
+        const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+        if (email === "" || !emailRegex.test(email)) {
+          alert(`Invalid Email`);
+          return;
+        }
+
+        const phone = document.getElementById("phone").value.trim();
+        const phoneRegex = new RegExp(/^\d{10}$/);
+        if (!phoneRegex.test(phone)) {
+          alert(`Invalid Phone Number`);
+          return;
+        }
+
+        const address = document.getElementById("address").value.trim();
+        const addressRegex = new RegExp(/^[a-zA-Z0-9 ,-]*$/);
+
+        if (address === "" || !addressRegex.test(address)) {
+          alert(
+            `Address cannot be empty and should only contain alphabets, spaces, commas and hyphens`
+          );
+          return;
+        }
+
+        const formVals = {
+          username: uname,
+          password: password,
+          email: email,
+          phone: phone,
+          address: address,
+        };
+
+        fetch("/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formVals),
+        })
+          .then((res) => {
+            if (res.ok) {
+              alert("Registered Successfully");
+              window.location.href = "/login";
+            } else {
+              alert("User already exists. Please login.");
+            }
+          })
+          .catch((err) => {
+            console.error("Error:", err);
+          });
+      }
+      document.getElementById("registerForm").reset();
+    </script>
+  </body>
+</html>

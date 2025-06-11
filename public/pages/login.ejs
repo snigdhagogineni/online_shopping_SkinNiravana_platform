@@ -1,0 +1,185 @@
+<!-- login page-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Login</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: 70px;
+        /* To provide space for the fixed navbar */
+      }
+    
+      .navbar {
+        background: linear-gradient(to bottom, #00BC7E, #108775);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 24px;
+      }
+    
+      .navbar-brand,
+      .navbar-nav .nav-link {
+        font-size: 45px;
+      }
+    
+      .login-container {
+        background: linear-gradient(to bottom, #00BC7E, #108775);
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        height: 400px;
+      }
+    
+      .login-container h1 {
+        text-align: left;
+        margin-bottom: 20px;
+        color: White;
+        padding-left: 10px;
+        font-size: 32px;
+      }
+    
+      .login-container label {
+        color: White;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 20px;
+      }
+    
+      .login-container input[type="text"],
+      .login-container input[type="password"] {
+        width: calc(100% - 30px);
+        /* Adjust the width as needed */
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+      }
+    
+      .login-container .btn-success {
+        background-color: #4169E1;
+        color: white;
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+      }
+    
+      .login-container .form-group.text-center a {
+        color: white;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">SkinNiravana</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="login-container">
+      <h1>Login</h1>
+      <form action="/login" method="POST">
+        <!-- <div class="row"> -->
+          <div class="form-group">
+            <label for="username" style="display: inline-block;">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Username"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="form-group ">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            /><br />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-success" />
+          </div>
+        <!-- </div> -->
+
+        <!-- <div class="row"> -->
+          <div class="form-group text-center">
+            <a href="/register">New User? Go to Registration page</a>
+          </div>
+        <!-- </div> -->
+      </form>
+    </div>
+
+    <!-- <script>
+      function submitForm() {
+        event.preventDefault();
+        const uname = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+        if (uname === "") {
+          alert("username should not be empty.");
+          return;
+        }
+
+        if (password === "") {
+          alert("password should not be empty.");
+          return;
+        }
+
+        const formVals = {
+          username: uname,
+          password: password,
+        };
+
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formVals),
+        })
+          .then((res) => {
+            console.log("res", res);
+            if (res.ok) {
+              console.log("User logged in successfully");
+              //   window.location.href = "./items";
+            } else {
+              alert("Username or password is Incorrect");
+            }
+          })
+          .catch((err) => {
+            alert("Username or password is Incorrect");
+          });
+      }
+    </script> -->
+  </body>
+</html>

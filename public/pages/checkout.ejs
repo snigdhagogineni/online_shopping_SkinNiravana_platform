@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Checkout</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <style>
+      .navbar {
+        background: linear-gradient(to bottom, #00BC7E, #108775);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 24px;
+    
+      }
+    
+      .navbar-brand {
+    
+    
+        font-size: 45px !important;
+      }
+    
+    
+      .navbar-brand,
+      .navbar-nav .nav-link {
+        font-size: 28px;
+      }
+    
+      .cont1 {
+        padding: 100px;
+    
+      }
+    
+      .item-column {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* Adjust the space between elements */
+      }
+    
+      .quantity-column {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* Adjust the space between elements */
+      }
+    
+      .item-actions {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        /* Adjust the space between buttons */
+      }
+    
+      .counttotal {
+        text-align: right;
+      }
+    
+      .checkout-cart {
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+      }
+    
+      #carthead {
+        margin-left: 520px;
+        margin-bottom: 45px;
+    
+      }
+    
+      .bnspc {
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    
+      }
+    
+      .item-price {
+        margin-left: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cont1">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">SkinNiravana</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/logout" style="color: white;">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <h1 id="carthead">Cart</h1>
+    <div class="checkout-cart" style="width: 400px; margin: 0 auto">
+      <% items.forEach(function(item) { %>
+      <div class="checkout-item" data-id="<%= item._id %>">
+        <div class="item-column">
+          <img src="<%= item.image %>" alt="<%= item.name %>" />
+        </div>
+        <div class="item-column">
+          <span class="item-name"><%= item.name %></span>
+          <p class="item-description"><%= item.description %></p>
+          <div class="item-actions">
+            <button
+              onclick="decrementCount('<%= item._id %>')"
+              class="btn btn-danger"
+            >
+              -
+            </button>
+            <span id="count-<%= item._id %>"> <%= item.count %> </span>
+            <button
+              onclick="incrementCount('<%= item._id %>')"
+              class="btn btn-success"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div class="item-column">
+          <span
+            id="price-<%= item._id %>"
+            class="item-price"
+            data-original-price="<%= item.value %>"
+            >$<%= item.count * item.value %></span
+          >
+        </div>
+      </div>
+      <% }); %>
+      <div>Total Count: <span id="total-count"></span></div>
+      <button onclick="buyNow()" class="btn btn-primary bnspc">Buy Now</button>
+      <a href="/items">Go back to Items</a>
+    </div>
+    </div>
+
+    <script>
+      function buyNow() {
+        fetch("/checkout", {
+          method: "POST",
+        })
+          .then((res) => {
+            if (res.ok) {
+              console.log("Cart cleared successfully");
+              window.location.href =
+                "/items?message=Items bought successfully!";
+            } else {
+              console.error("Error clearing the cart:", res.status);
+            }
+          })
+          .catch((error) => {
+            console.error("Error clearing the cart:", error);
+          });
+      }
+      function incrementCount(itemId) {
+        const countElement = document.getElementById(`count-${itemId}`);
+        const priceElement = document.getElementById(`price-${itemId}`);
+        const currentCount = parseInt(countElement.innerText);
+        const originalPrice = parseFloat(priceElement.dataset.originalPrice);
+
+        countElement.innerText = currentCount + 1;
+        priceElement.innerText = '$' + (currentCount + 1) * originalPrice;
+        updateTotalCount();
+        saveChanges();
+      }
+
+      function decrementCount(itemId) {
+        const countElement = document.getElementById(`count-${itemId}`);
+        const priceElement = document.getElementById(`price-${itemId}`);
+        const currentCount = parseInt(countElement.innerText);
+        const originalPrice = parseFloat(priceElement.dataset.originalPrice);
+
+        if (currentCount > 0) {
+          countElement.innerText = currentCount - 1;
+          priceElement.innerText = '$' +  (currentCount - 1) * originalPrice;
+          updateTotalCount();
+          saveChanges();
+        } else {
+          priceElement.innerText = '$' + 0.0;
+        }
+      }
+
+      function updateTotalCount() {
+        const items = Array.from(document.querySelectorAll(".checkout-item"));
+        const totalCount = items.reduce((total, item) => {
+          return (
+            total + parseInt(item.querySelector(`span[id^="count-"]`).innerText)
+          );
+        }, 0);
+
+        document.getElementById("total-count").innerText = totalCount;
+      }
+
+      function saveChanges() {
+        const items = Array.from(document.querySelectorAll(".checkout-item"));
+        const updatedItems = items.map((item) => {
+          return {
+            _id: item.getAttribute("data-id"),
+            count: parseInt(item.querySelector('span[id^="count-"]').innerText),
+          };
+        });
+
+        fetch("/updateCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ updatedItems }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            // Reload the page after updating the cart count
+            updateTotalCount();
+            //fetchCartCount()
+            //window.location.reload();
+          })
+          .catch((error) => {
+            console.error("Error saving changes:", error);
+          });
+      }
+      function calculateTotalCount(cartItems) {
+        return cartItems.reduce((total, item) => total + item.count, 0);
+      }
+
+      function fetchCartCount() {
+        fetch("/cart")
+          .then((res) => res.json())
+          .then((data) => {
+            const cartItems = data.items || [];
+            const totalCount = calculateTotalCount(cartItems);
+            document.getElementById("total-count").innerText = totalCount;
+          })
+          .catch((error) => {
+            console.error("Error fetching cart count:", error);
+          });
+      }
+      window.onload = function () {
+        fetchCartCount();
+      };
+    </script>
+  </body>
+</html>
